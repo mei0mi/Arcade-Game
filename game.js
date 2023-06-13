@@ -11,6 +11,10 @@ let paddle2Y = 250;
 const PADDLE_THICKNESS = 10;
 const PADDLE_HEIGHT = 100;
 
+let player1Score = 0;
+let player2Score = 0;
+
+
 //FUNCTIONS
 
 window.onload = function() {
@@ -28,8 +32,6 @@ window.onload = function() {
         var mousePos = calculateMousePos(event);
         paddle1Y = mousePos.y - (PADDLE_HEIGHT/2);
     })
-
-    computerMoving()
 }
 
 function calculateMousePos(event){
@@ -80,13 +82,20 @@ function moveShapes() {
         if(ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
             ballSpeedX = -ballSpeedX;
         } 
-        else {ballReset()};
+        else {
+            ballReset()
+            player1Score++
+        };
     }
     if(ballX < 0) {
         if(ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
             ballSpeedX = -ballSpeedX;
+
         } 
-        else {ballReset()}
+        else {
+            ballReset()
+            player2Score++
+        }
     }
 
     if(ballY > canvas.height){
@@ -119,4 +128,9 @@ function shapes() {
     canvasBorder.beginPath();
     canvasBorder.arc(ballX, ballY,10,0,Math.PI * 2, true);
     canvasBorder.fill();
+
+    //SHOWING THE RESULTS 
+    canvasBorder.fillText(player1Score,100,100)
+    canvasBorder.fillText(player2Score,canvas.width -100,100)
+    
 }
